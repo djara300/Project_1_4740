@@ -1,0 +1,77 @@
+---
+title: "STAT 4740 Project"
+subtitle: "Data & Exploratory Analysis"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    toc: true
+editor: source
+execute: 
+  error: true
+  echo: true
+  message: false
+  warning: false
+---
+
+### Libraries
+
+```{r}
+library(readr)
+library(tidyverse)
+library(kableExtra)
+```
+
+### Data
+
+```{r}
+# Data Import from GitHub
+cars <- read_csv(
+  "https://raw.githubusercontent.com/djara300/Project_1_4740/main/pakistan_cars.csv"
+  )
+
+head(cars, n=5)
+```
+
+### Exploratory Data
+
+#### Summary Tables
+
+```{r}
+# Number of Brands, Types of Fuel, & Cities in Dataset
+cars |> 
+  summarise(Num_Brands = length(unique(brand)), 
+            Num_Models = length(unique(model)),
+            Num_Fuel_Type = length(unique(fuel_type)), 
+            Num_Cities = length(unique(city))) |> 
+  kable()
+
+
+# Numnber of cars per Brand
+cars |> 
+  group_by(brand) |> 
+  summarise("Number of Cars" = length(brand)) |> 
+  rename("Brand" = brand) |>
+  arrange(desc(`Number of Cars`)) |> 
+  head(10) |> 
+  kable()
+
+
+# Number of cars per Type of Fuel 
+cars |> 
+  group_by(fuel_type) |> 
+  summarise("Number of Cars" = length(fuel_type)) |> 
+  rename("Fuel Type" = fuel_type) |> 
+  arrange(desc(`Number of Cars`)) |> 
+  kable()
+
+
+# Number of cars listed in each City 
+cars |> 
+  group_by(city) |> 
+  summarise("Number of Cars" = length(city)) |> 
+  rename("City" = city) |>
+  arrange(desc(`Number of Cars`)) |> 
+  head(10) |> 
+  kable()
+```
