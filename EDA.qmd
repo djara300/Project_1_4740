@@ -10,6 +10,7 @@ library(tidyverse)
 
 ```{r}
 pakistan_cars <- read_csv("pakwheels_used_cars_2026_clean.csv")
+cities_pop <- read_csv("cities_population.csv")
 ```
 
 
@@ -36,14 +37,38 @@ clean_cars <- pakistan_cars |>
          -scraped_at)
 
 
-
+clean_cars_pop <- clean_cars |> 
+  left_join(cities_pop, join_by(city == City))
 
 ```
+
 
 
 ```{r}
 write_csv(clean_cars, "clean_cars.csv")
+write_csv(clean_cars_pop, "clean_cars_pop.csv")
 ```
+
+
+
+
+```{r}
+clean_cars |> 
+  filter(city %in% c("Karachi", "Lahore", "Faisalabad", "Rawalpindi", "Gujranwala", "Multan", "Hyderabad", "Peshawar")) |> 
+  ggplot(
+    aes(x = mileage, y = price_usd, color = "red")
+  ) +
+  geom_point() +
+  facet_wrap(~city)
+```
+
+
+
+
+
+
+
+
 
 
 
