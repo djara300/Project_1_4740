@@ -1,0 +1,56 @@
+---
+title: "4740 Project EDA"
+format: html
+---
+
+```{r}
+library(tidyverse)
+
+```
+
+```{r}
+pakistan_cars <- read_csv("pakwheels_used_cars_2026_clean.csv")
+```
+
+
+```{r}
+write_csv(pakistan_cars, "pakistan_cars.csv")
+```
+
+
+```{r}
+clean_cars <- pakistan_cars |> 
+  rename(
+    price_usd = price_pkr,
+    mileage = mileage_km
+  ) |> 
+  mutate(
+    price_usd = round(price_usd * 0.0036, 0),
+    mileage = round(mileage * 0.621371, 0)
+  ) |> 
+  filter(!is.na(mileage),
+         !is.na(engine_cc)) |> 
+  select(-mileage_flag,
+         -engine_cc_flag,
+         -link,
+         -scraped_at)
+
+
+
+
+```
+
+
+```{r}
+write_csv(clean_cars, "clean_cars.csv")
+```
+
+
+
+
+
+
+
+
+
+
