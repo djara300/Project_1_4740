@@ -9,8 +9,10 @@ library(tidyverse)
 ```
 
 ```{r}
-pakistan_cars <- read_csv("pakwheels_used_cars_2026_clean.csv")
-cities_pop <- read_csv("cities_population.csv")
+pakistan_cars <- read_csv(
+  "https://raw.githubusercontent.com/djara300/Project_1_4740/main/pakistan_cars.csv")
+cities_pop <- read_csv(
+  "https://raw.githubusercontent.com/djara300/Project_1_4740/main/cities_population.csv")
 ```
 
 
